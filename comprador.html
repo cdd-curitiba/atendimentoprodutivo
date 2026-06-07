@@ -351,7 +351,7 @@ td.td-dia{text-align:center;white-space:nowrap;}
   <div id="pg-painel" class="page on">
     <div class="sec-head">
       <span class="sec-title">Visão Geral de Compradores</span>
-      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:01</span>
+      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:04</span>
     </div>
     <div class="tcard">
       <table class="gt">
@@ -539,8 +539,8 @@ function renderOport(){
   if(dia)list=list.filter(c=>c.visita===dia);
   document.getElementById('ocnt').textContent=list.length;
   list.sort((a,b)=>{
-    const pa = (a.agendado&&a.m1==='SIM')?0:(a.m1==='SIM')?1:(a.agendado)?2:3;
-    const pb = (b.agendado&&b.m1==='SIM')?0:(b.m1==='SIM')?1:(b.agendado)?2:3;
+    const pa = (a.agendado&&a.m1==='SIM')?0:(a.agendado)?1:(a.m1==='SIM')?2:3;
+    const pb = (b.agendado&&b.m1==='SIM')?0:(b.agendado)?1:(b.m1==='SIM')?2:3;
     if(pa!==pb) return pa-pb;
     return(DO[a.visita]||9)-(DO[b.visita]||9);
   });
