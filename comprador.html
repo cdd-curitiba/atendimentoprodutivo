@@ -293,6 +293,8 @@ td.td-dia{text-align:center;white-space:nowrap;}
 .wrap{animation:fadeUp .5s ease .2s both;}
 @keyframes fadeSlideDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.btn-toggle-agend{padding:4px 10px;border-radius:6px;border:1px solid #d1d5db;background:#fff;color:#6b7280;cursor:pointer;font-size:11px;font-weight:600;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap;}
+.btn-toggle-agend.ativo{background:#fee2e2;color:#dc2626;border-color:#fca5a5;}
 </style>
 </head>
 <body>
@@ -351,7 +353,7 @@ td.td-dia{text-align:center;white-space:nowrap;}
   <div id="pg-painel" class="page on">
     <div class="sec-head">
       <span class="sec-title">Visão Geral de Compradores</span>
-      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:16</span>
+      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:20</span>
     </div>
     <div class="tcard">
       <table class="gt">
@@ -447,7 +449,7 @@ const DL={"SEG":"Seg","TER":"Ter","QUA":"Qua","QUI":"Qui","SEX":"Sex","SAB":"Sá
 const DO={"SEG":1,"TER":2,"QUA":3,"QUI":4,"SEX":5,"SAB":6,"DOM":7,"Indefinido":8};
 let sel=null;
 
-document.getElementById('hdate').textContent='Últ. atualização 06/06/2026 23:16';
+document.getElementById('hdate').textContent='Últ. atualização 06/06/2026 23:20';
 
 let _sala='1';
 function escolherSala(s){
@@ -467,6 +469,15 @@ function setSala(s){
 }
 function PAINEL_SALA(){ return PAINEL.filter(p=>p.sala===_sala); }
 
+
+let _hideAgend = false;
+function toggleAgend(){
+  _hideAgend = !_hideAgend;
+  const btn = document.getElementById('btnAgend');
+  btn.textContent = _hideAgend ? 'Mostrar Agendados' : 'Ocultar Agendados';
+  btn.classList.toggle('ativo', _hideAgend);
+  renderOport();
+}
 function goTab(t){
   document.querySelectorAll('.nav-item').forEach((el,i)=>el.classList.toggle('on',['painel','setor'][i]===t));
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('on'));
