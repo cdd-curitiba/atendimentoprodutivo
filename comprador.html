@@ -127,6 +127,8 @@ body{
 .wrap{padding:16px 14px 64px;max-width:960px;margin:0 auto;}
 .page{display:none;}
 .page.on{display:block;}
+.sala-fade{animation:salaFadeIn .8s ease;}
+@keyframes salaFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
 /* ── SEC HEAD ── */
 .sec-head{margin-bottom:14px;}
@@ -407,7 +409,7 @@ table.ot tbody td{padding:8px 4px;color:var(--text2);}
   <div id="pg-painel" class="page on">
     <div class="sec-head">
       <span class="sec-title">Visão Geral de Compradores</span>
-      <span class="sec-sub">Todos os setores · atualizado em 07/06/2026 17:57</span>
+      <span class="sec-sub">Todos os setores · atualizado em 07/06/2026 18:00</span>
     </div>
     <div class="tcard">
       <table class="gt">
@@ -502,7 +504,7 @@ const DL={"SEG":"Seg","TER":"Ter","QUA":"Qua","QUI":"Qui","SEX":"Sex","SAB":"Sá
 const DO={"SEG":1,"TER":2,"QUA":3,"QUI":4,"SEX":5,"SAB":6,"DOM":7,"Indefinido":8};
 let sel=null;
 
-document.getElementById('hdate').textContent='Últ. atualização 07/06/2026 17:57';
+document.getElementById('hdate').textContent='Últ. atualização 07/06/2026 18:00';
 
 let _sala='1';
 function escolherSala(s){
@@ -517,6 +519,10 @@ function escolherSala(s){
 function setSala(s){
   _sala=s;
   document.querySelectorAll('.sala-btn').forEach(b=>b.classList.toggle('active',b.dataset.sala===s));
+  const pg=document.getElementById('pg-painel');
+  pg.classList.remove('sala-fade');
+  void pg.offsetWidth;
+  pg.classList.add('sala-fade');
   renderPainel();
   renderChips();
 }
@@ -577,7 +583,11 @@ function pickSetor(s){
   sel=s;renderChips();
   const p=PAINEL.find(x=>x.setor===s);if(!p)return;
   document.getElementById('ph').style.display='none';
-  document.getElementById('sdet').classList.add('on');
+  const sdet=document.getElementById('sdet');
+  sdet.classList.add('on');
+  sdet.classList.remove('sala-fade');
+  void sdet.offsetWidth;
+  sdet.classList.add('sala-fade');
   const pct=p.meta>0?Math.round(p.real/p.meta*100):0;
   document.getElementById('krow').innerHTML=`
     <div class="kpi"><div class="kpi-l">Meta</div><div class="kpi-v kblue">${p.meta}</div></div>
