@@ -144,6 +144,7 @@ table.gt tfoot td:first-child{
 .v-neg{color:var(--red)!important;font-weight:700;}
 .v-pos{color:var(--green)!important;font-weight:700;}
 .v-blue{color:var(--blue)!important;font-weight:600;}
+#btnAgend.ativo{background:#2d7ef7;color:#fff;border-color:#2d7ef7;}
 
 /* ── CHIPS ── */
 .sel-label{font-size:11px;font-weight:600;color:var(--gray400);text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px;}
@@ -353,7 +354,7 @@ td.td-dia{text-align:center;white-space:nowrap;}
   <div id="pg-painel" class="page on">
     <div class="sec-head">
       <span class="sec-title">Visão Geral de Compradores</span>
-      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:20</span>
+      <span class="sec-sub">Todos os setores · atualizado em 06/06/2026 23:24</span>
     </div>
     <div class="tcard">
       <table class="gt">
@@ -412,7 +413,7 @@ td.td-dia{text-align:center;white-space:nowrap;}
             <span style="font-size:.6rem;color:#94a3b8;font-weight:400;">(M-1 = Comprou mês anterior)</span>
           </div>
         </div>
-        <div class="filter-row">
+        <div class="filter-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <span>Dia:</span>
           <select id="fdia" onchange="renderOport()">
             <option value="">Todos</option>
@@ -425,6 +426,7 @@ td.td-dia{text-align:center;white-space:nowrap;}
             <option value="DOM">Domingo</option>
             <option value="Indefinido">Indefinido</option>
           </select>
+          <button id="btnAgend" onclick="toggleAgend()" style="height:30px;padding:0 10px;border-radius:6px;border:1.5px solid #2d7ef7;background:#fff;color:#2d7ef7;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;">Ocultar Agendados</button>
         </div>
       </div>
       <div class="tcard">
@@ -449,7 +451,7 @@ const DL={"SEG":"Seg","TER":"Ter","QUA":"Qua","QUI":"Qui","SEX":"Sex","SAB":"Sá
 const DO={"SEG":1,"TER":2,"QUA":3,"QUI":4,"SEX":5,"SAB":6,"DOM":7,"Indefinido":8};
 let sel=null;
 
-document.getElementById('hdate').textContent='Últ. atualização 06/06/2026 23:20';
+document.getElementById('hdate').textContent='Últ. atualização 06/06/2026 23:24';
 
 let _sala='1';
 function escolherSala(s){
@@ -548,6 +550,7 @@ function renderOport(){
   const dia=document.getElementById('fdia').value;
   let list=CLIENTS.filter(c=>c.setor===sel && c.m0!=='SIM');
   if(dia)list=list.filter(c=>c.visita===dia);
+  if(_hideAgend)list=list.filter(c=>!c.agendado);
   document.getElementById('ocnt').textContent=list.length;
   list.sort((a,b)=>{
     const pa = (a.agendado&&a.m1==='SIM')?0:(a.agendado)?1:(a.m1==='SIM')?2:3;
